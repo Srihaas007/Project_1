@@ -2,9 +2,17 @@ import React from 'react';
 
 const HomePage = () => (
   <div className="home-container">
+    <br>
+    </br>
+    <br>
+    </br>
+    <br>
+    </br>
     {/* Welcome Section */}
     <section className="hero-section">
+      
       <div className="hero-text">
+      
         <h1>Welcome to Project_1</h1>
         <p>
           Project_1 is dedicated to pioneering the next generation of chatbot solutions powered by LLaMA 3, an advanced open-source language model developed by Facebook. We specialize in integrating cutting-edge natural language processing (NLP) technologies into Retrieval-Augmented Generation (RAG) pipelines, enabling our chatbots to deliver intelligent and context-aware responses.
@@ -79,8 +87,8 @@ const HomePage = () => (
       <div className="contact-text">
         <h2>Contact Us</h2>
         <p>For inquiries or collaborations, please contact us at:</p>
-        <p>Email: contact@example.com</p>
-        <p>Phone: +1 (123) 456-7890</p>
+        <p>Email: contact@project1.com</p>
+        <p>Phone: +44 7788760133</p>
       </div>
     </section>
   </div>

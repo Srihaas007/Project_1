@@ -7,6 +7,7 @@ body {
   color: #fff; /* Light text color for contrast */
   margin: 0;
   padding: 0;
+  font-size: 16px; /* Base font size */
 }
 
 .app-container {
@@ -63,8 +64,50 @@ nav ul li a:hover {
   border-radius: 5%;
 }
 
-.home-container {
-  padding: 20px;
+/* Responsive Navigation */
+@media (max-width: 768px) {
+  nav ul {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px; /* Adjust as needed */
+    left: 0;
+    right: 0;
+    background-color: #333;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  /* Hamburger icon */
+  .menu-icon {
+    display: block;
+    cursor: pointer;
+    color: #fff;
+    padding: 10px 30px 10px 10px;
+    
+  }
+
+  .menu-line {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 5px;
+    transition: transform 0.3s ease;
+  }
+
+  .show .menu-line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .show .menu-line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .show .menu-line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
 }
 
 /* Sections styling */
