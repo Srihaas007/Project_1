@@ -10,6 +10,8 @@
 
 # production
 /build
+/src/Python_src/.env
+/Project_1_env
 
 # misc
 .DS_Store
