@@ -4,14 +4,15 @@
 /node_modules
 /.pnp
 .pnp.js
+/src/Python_src/.env
+/Project_1_env
 
 # testing
 /coverage
 
 # production
 /build
-/src/Python_src/.env
-/Project_1_env
+
 
 # misc
 .DS_Store
