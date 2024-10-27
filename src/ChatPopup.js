@@ -1,6 +1,7 @@
 // src/ChatPopup.js
 import React, { useState } from 'react';
 import './ChatPopup.css';
+import { FaPaperclip, FaPaperPlane } from 'react-icons/fa';
 
 const ChatPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,6 +19,13 @@ const ChatPopup = () => {
     if (message.trim()) {
       setMessages([...messages, { text: message, sender: 'user' }]);
       setMessage('');
+    }
+  };
+
+  const handleFileInputChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setMessages([...messages, { text: `File: ${file.name}`, sender: 'user' }]);
     }
   };
 
@@ -46,12 +54,24 @@ const ChatPopup = () => {
           </div>
           <div className="chat-input-container">
             <input
+              type="file"
+              id="file-input"
+              className="file-input"
+              onChange={handleFileInputChange}
+            />
+            <label htmlFor="file-input" className="file-input-label">
+              <FaPaperclip size={20} />
+            </label>
+            <input
               type="text"
               value={message}
               onChange={handleMessageChange}
               placeholder="Type your message..."
+              className="chat-input"
             />
-            <button onClick={handleSendMessage}>Send</button>
+            <button onClick={handleSendMessage} className="send-button">
+              <FaPaperPlane size={20} />
+            </button>
           </div>
         </div>
       )}
