@@ -1,0 +1,7 @@
+openai
+PyPDF2
+ollama
+pyyaml
+beautifulsoup4
+lxml
+python-dotenv
