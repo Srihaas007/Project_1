@@ -22,13 +22,44 @@ const ChatPopup = () => {
     }
   };
 
-  const handleFileInputChange = (e) => {
+  const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setMessages([...messages, { text: `File: ${file.name}`, sender: 'user' }]);
+      console.log("Selected file:", file); // Debug log
+      
+      const formData = new FormData();
+      formData.append('file', file);
+  
+      try {
+        console.log("Sending file to server..."); // Debug log
+        const response = await fetch('http://localhost:5000/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+  
+        console.log("Server response:", response); // Debug log
+        const data = await response.json();
+        
+        if (response.ok) {
+          setMessages([...messages, { 
+            text: `File uploaded: ${file.name}`, 
+            sender: 'user' 
+          }]);
+        } else {
+          setMessages([...messages, { 
+            text: `Error uploading file: ${data.error}`, 
+            sender: 'system' 
+          }]);
+        }
+      } catch (error) {
+        console.error("Upload error:", error); // Debug log
+        setMessages([...messages, { 
+          text: `Error uploading file: ${error.message}`, 
+          sender: 'system' 
+        }]);
+      }
     }
   };
-
   return (
     <div className="chat-container">
       {!isOpen && (
