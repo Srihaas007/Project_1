@@ -17,42 +17,82 @@ const ChatPopup = () => {
 
   const handleSendMessage = () => {
     if (message.trim()) {
-      setMessages([...messages, { text: message, sender: 'user' }]);
+      // Call handleQuery instead of just adding the message
+      handleQuery(message);
       setMessage('');
     }
   };
-
+  const handleQuery = async (query) => {
+    try {
+      const response = await fetch('http://localhost:5000/api/query', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ query }),
+      });
+  
+      const data = await response.json();
+      
+      if (response.ok) {
+        setMessages([
+          ...messages,
+          { text: query, sender: 'user' },
+          { text: data.response, sender: 'assistant' }
+        ]);
+      } else {
+        setMessages([
+          ...messages,
+          { text: query, sender: 'user' },
+          { text: `Error: ${data.error}`, sender: 'system' }
+        ]);
+      }
+    } catch (error) {
+      console.error("Query error:", error);
+      setMessages([
+        ...messages,
+        { text: query, sender: 'user' },
+        { text: `Error: ${error.message}`, sender: 'system' }
+      ]);
+    }
+  };
   const handleFileInputChange = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      console.log("Selected file:", file); // Debug log
+      console.log("Selected file:", file);
       
       const formData = new FormData();
       formData.append('file', file);
   
       try {
-        console.log("Sending file to server..."); // Debug log
+        console.log("Sending file to server...");
         const response = await fetch('http://localhost:5000/api/upload', {
           method: 'POST',
           body: formData,
+          // Add these headers to ensure CORS works properly
+          headers: {
+            'Accept': 'application/json',
+            // Don't set Content-Type header when using FormData
+          },
         });
   
-        console.log("Server response:", response); // Debug log
+        console.log("Server response status:", response.status);
         const data = await response.json();
+        console.log("Server response data:", data);
         
         if (response.ok) {
           setMessages([...messages, { 
-            text: `File uploaded: ${file.name}`, 
+            text: `File uploaded successfully: ${file.name}`, 
             sender: 'user' 
           }]);
         } else {
           setMessages([...messages, { 
-            text: `Error uploading file: ${data.error}`, 
+            text: `Error uploading file: ${data.error || 'Unknown error'}`, 
             sender: 'system' 
           }]);
         }
       } catch (error) {
-        console.error("Upload error:", error); // Debug log
+        console.error("Upload error:", error);
         setMessages([...messages, { 
           text: `Error uploading file: ${error.message}`, 
           sender: 'system' 
